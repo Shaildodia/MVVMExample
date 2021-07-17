@@ -21,7 +21,7 @@ class ProductViewController: UIViewController, CLLocationManagerDelegate, MKMapV
   @IBOutlet private var mapView: MKMapView!
   @IBOutlet private var vehicleCollectionViewController: UICollectionView!
   
-  let productViewModel = ProductViewModel()
+  let productViewModel = ProductViewModel(jsonFileName: "Test-vehicles_data")
   
   override func viewDidLoad() {
     super.viewDidLoad()

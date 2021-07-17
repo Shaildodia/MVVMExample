@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Vehicles: Codable {
+public struct Vehicles: Codable {
   let vehicles: [Vehicle]
 }
 
-struct Vehicle: Codable {
+public struct Vehicle: Codable {
   let id: Double
   let is_active: Bool
   let is_available: Bool

@@ -10,19 +10,19 @@ import MapKit
 
 public class ProductViewModel {
   
-  var vehicles = [Vehicle]()
-  var annotations = [MKPointAnnotation]()
+  public private(set) var vehicles = [Vehicle]()
+  public private(set) var annotations = [MKPointAnnotation]()
   
-  init() {
-    if let vehicles = fetchVehicleDetails() {
+  init(jsonFileName: String) {
+    if let vehicles = fetchVehicleDetails(jsonFileName: jsonFileName) {
       self.vehicles = vehicles
     }
     annotations = annotationForAllVehicles()
   }
   
   // Fetch vehicle details from json files.
-  private func fetchVehicleDetails() -> [Vehicle]? {
-    if let url = Bundle.main.url(forResource: "Test-vehicles_data", withExtension: "json") {
+  private func fetchVehicleDetails(jsonFileName: String) -> [Vehicle]? {
+    if let url = Bundle.main.url(forResource: jsonFileName, withExtension: "json") {
       do {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
