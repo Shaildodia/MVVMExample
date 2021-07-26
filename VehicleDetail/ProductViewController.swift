@@ -25,12 +25,12 @@ class ProductViewController: UIViewController, CLLocationManagerDelegate, MKMapV
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    vehicleCollectionViewController.contentInset = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64);
+    vehicleCollectionViewController.contentInset = UIEdgeInsets(top: 0, left: 64, bottom: 0, right: 64)
     getRequiredLocatiom()
     addAnotations()
   }
   
-  // Zoom map to sanfrancisco.
+  // Zoom map to San francisco.
   private func getRequiredLocatiom() {
     let sanfranciscoCordinates = CLLocation(
       latitude: Constants.defaultCordinateLat, longitude: Constants.defaultCordinateLon)
@@ -42,6 +42,10 @@ class ProductViewController: UIViewController, CLLocationManagerDelegate, MKMapV
   // Add all annotation on mapview.
   private func addAnotations() {
     mapView.addAnnotations(productViewModel.annotations)
+    
+    if productViewModel.vehicles.count > 0, let selectedAnnotation = productViewModel.annotation(for: 0) {
+      mapView.selectAnnotation(selectedAnnotation, animated: true)
+    }
   }
   
   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -52,7 +56,7 @@ class ProductViewController: UIViewController, CLLocationManagerDelegate, MKMapV
       return annotationView
     } else {
       let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier: identifier)
-      annotationView.isEnabled = true
+      annotationView.isEnabled = true // To enable touch event.
       annotationView.canShowCallout = true
       return annotationView
     }
@@ -69,6 +73,7 @@ class ProductViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     mapView.setRegion(region, animated: true)
     
     guard let indexPath = productViewModel.indexForAnnotation(annotation: annotation) else {
+      print("Could not get collection index from cordinates.")
       return
     }
     vehicleCollectionViewController.scrollToItem(at: indexPath, at: .right, animated: true)
@@ -107,6 +112,28 @@ extension ProductViewController: UICollectionViewDelegate, UICollectionViewDataS
         title: "Error", message: "We do not have map position for this cab.", preferredStyle: .alert)
       alertView.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
       self.present(alertView, animated: true)
+    }
+  }
+  
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    
+    
+    let visibleRect = CGRect(origin: vehicleCollectionViewController.contentOffset, size: vehicleCollectionViewController.bounds.size)
+    let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+    let visibleIndexPath = vehicleCollectionViewController.indexPathForItem(at: visiblePoint)
+
+    print("Current visible indexpath: \(visibleIndexPath)")
+
+//    guard let cell = vehicleCollectionViewController.visibleCells.first else {
+//      return
+//    }
+//    let indexPath = vehicleCollectionViewController.indexPath(for: cell)
+
+    if let row = visibleIndexPath?.row, let selectedAnnotation = productViewModel.annotation(for: row) {
+      print("Current visible indexpath row: \(row)")
+      mapView.selectAnnotation(selectedAnnotation, animated: true)
+    } else {
+      print("We do not have map position.")
     }
   }
 }

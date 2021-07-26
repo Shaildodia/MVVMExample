@@ -17,10 +17,10 @@ public class VehicleCellViewModel {
   
   init(vehicle: Vehicle) {
     numberOfSeat = "\(Int.random(in: 3...6)) Seats"
-    remaining_mileage = "Remaining mileage: \(vehicle.remaining_mileage)"
-    vehicleName = vehicle.vehicle_make
-    license_plate_number = vehicle.license_plate_number
-    vehicleImage = vehicle.vehicle_pic_absolute_url
+    remaining_mileage = "Remaining mileage: \(vehicle.remainingMileage)"
+    vehicleName = vehicle.vehiclMake
+    license_plate_number = vehicle.licensePlateNumber
+    vehicleImage = vehicle.vehiclePicAbsoluteUrl
   }
   
   func loadVehicleImage(completion: @escaping (UIImage) -> Void ) {

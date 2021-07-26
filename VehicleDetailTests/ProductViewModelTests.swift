@@ -18,20 +18,20 @@ class ProductViewModelTests: XCTestCase {
   
   func testVehicleDetailsFromJson() {
     XCTAssertEqual(productViewModel.vehicles.count, 2, "There should be two vehicle")
-    XCTAssertEqual(productViewModel.vehicles.first?.id, 100)
-    XCTAssertEqual(productViewModel.vehicles.first?.lat, 37.779816)
-    XCTAssertEqual(productViewModel.vehicles.first?.lng, -122.395447)
-    XCTAssertEqual(productViewModel.vehicles.first?.vehicle_make, "Tata Tiago")
-    XCTAssertEqual(productViewModel.vehicles.first?.vehicle_type, "Tata Tiago")
-    XCTAssertEqual(productViewModel.vehicles.first?.license_plate_number, "XYZ123")
-    XCTAssertTrue(productViewModel.vehicles.first!.is_active)
-    XCTAssertTrue(productViewModel.vehicles.first!.is_available)
+    XCTAssertEqual(productViewModel.vehicles.first!.id, 100)
+    XCTAssertEqual(productViewModel.vehicles.first!.lat, 37.779816)
+    XCTAssertEqual(productViewModel.vehicles.first!.lng, -122.395447)
+    XCTAssertEqual(productViewModel.vehicles.first!.vehiclMake, "Tata Tiago")
+    XCTAssertEqual(productViewModel.vehicles.first!.vehicleType, "Tata Tiago")
+    XCTAssertEqual(productViewModel.vehicles.first!.licensePlateNumber, "XYZ123")
+    XCTAssertTrue(productViewModel.vehicles.first!.isActive)
+    XCTAssertTrue(productViewModel.vehicles.first!.isActive)
   }
   
   func testAnnotationForAllVehicles() {
     XCTAssertEqual(productViewModel.annotations.count, 1, "There should be annotation for single vehicle")
-    XCTAssertEqual(productViewModel.annotations.first?.coordinate.latitude, 37.779816)
-    XCTAssertEqual(productViewModel.annotations.first?.coordinate.longitude, -122.395447)
+    XCTAssertEqual(productViewModel.annotations.first!.coordinate.latitude, 37.779816)
+    XCTAssertEqual(productViewModel.annotations.first!.coordinate.longitude, -122.395447)
   }
   
   func testSuccessAnnotationIndexPath() {

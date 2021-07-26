@@ -27,7 +27,19 @@ public class ProductViewModel {
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         let vehicleData = try decoder.decode(Vehicles.self, from: data)
-        return vehicleData.vehicles
+        let vehicles = vehicleData.vehicles
+        
+        var uniqueVehicles = [Vehicle]()
+        uniqueVehicles = vehicles.reduce(uniqueVehicles) { (partialVehicle, vehicle) -> [Vehicle] in
+          if !partialVehicle.map({ $0.id }).contains(vehicle.id) {
+            var retyr = partialVehicle
+            retyr.append(vehicle)
+            return retyr
+          }
+          return partialVehicle
+        }
+        
+        return uniqueVehicles
       } catch {
         print("error:\(error)")
         return nil
@@ -42,11 +54,12 @@ public class ProductViewModel {
   private func annotationForAllVehicles() -> [MKPointAnnotation] {
     let annotations = vehicles.map { vehicle -> MKPointAnnotation? in
       guard let lat = vehicle.lat, let long = vehicle.lng else {
+        print("Can not get annotation without cordinates.")
         return nil
       }
       let annotation = MKPointAnnotation()
-      annotation.title = vehicle.vehicle_make
-      annotation.subtitle = vehicle.license_plate_number
+      annotation.title = vehicle.vehiclMake
+      annotation.subtitle = vehicle.licensePlateNumber
       annotation.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
       return annotation
     }

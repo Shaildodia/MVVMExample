@@ -13,18 +13,36 @@ public struct Vehicles: Codable {
 
 public struct Vehicle: Codable {
   let id: Double
-  let is_active: Bool
-  let is_available: Bool
+  let isActive: Bool
+  let isAvailable: Bool
   let lat: Double?
-  let license_plate_number: String
+  let licensePlateNumber: String
   let lng: Double?
   let pool: String
-  let remaining_mileage: Double
-  let remaining_range_in_meters: Double?
-  let transmission_mode: String?
-  let vehicle_make: String
-  let vehicle_pic: String
-  let vehicle_pic_absolute_url: String
-  let vehicle_type: String
-  let vehicle_type_id: Double
+  let remainingMileage: Double
+  let remainingRangeInMeters: Double?
+  let transmissionMode: String?
+  let vehiclMake: String
+  let vehiclePic: String
+  let vehiclePicAbsoluteUrl: String
+  let vehicleType: String
+  let vehicleTypeID: Double
+  
+  enum CodingKeys: String, CodingKey {
+    case id
+    case isActive = "is_active"
+    case isAvailable = "is_available"
+    case lat
+    case licensePlateNumber = "license_plate_number"
+    case lng
+    case pool
+    case remainingMileage = "remaining_mileage"
+    case remainingRangeInMeters = "remaining_range_in_meters"
+    case transmissionMode = "transmission_mode"
+    case vehiclMake = "vehicle_make"
+    case vehiclePic = "vehicle_pic"
+    case vehiclePicAbsoluteUrl = "vehicle_pic_absolute_url"
+    case vehicleType = "vehicle_type"
+    case vehicleTypeID = "vehicle_type_id"
+  }
 }
